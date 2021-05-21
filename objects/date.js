@@ -1,7 +1,6 @@
 /**
- * Extended and simpler-to-use version of native Date
- * @memberof sb
- * @namespace Date
+ * Extended and simpler-to-use version of native Date.
+ * @name SupiCoreDate
  */
 module.exports = class Date extends global.Date {
 	/**
@@ -17,8 +16,8 @@ module.exports = class Date extends global.Date {
 
 	/**
 	 * Compares two instances for their equality
-	 * @param {sb.Date} from
-	 * @param {sb.Date} to
+	 * @param {SupiCoreDate} from
+	 * @param {SupiCoreDate} to
 	 * @returns {boolean}
 	 */
 	static equals(from, to) {
@@ -131,7 +130,7 @@ module.exports = class Date extends global.Date {
 
 	/**
 	 * @param {number} offset in minutes
-	 * @returns {sb.Date}
+	 * @returns {SupiCoreDate}
 	 */
 	setTimezoneOffset(offset) {
 		offset = Number(offset);
@@ -150,7 +149,7 @@ module.exports = class Date extends global.Date {
 	/**
 	 * Sets the provided time units to zero.
 	 * @param {...<"h"|"m"|"s"|"ms">} units
-	 * @returns {sb.Date}
+	 * @returns {SupiCoreDate}
 	 */
 	discardTimeUnits(...units) {
 		for (const unit of units) {

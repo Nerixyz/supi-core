@@ -1,5 +1,9 @@
 module.exports = (async function (namespace = "sb", options = {}) {
-	globalThis[namespace] = {};
+	/**
+	 * @namespace
+	 * @type {GlobalSupiCoreNamespace}
+	 */
+	globalThis.sb = {};
 
 	const files = [
 		"objects/date",
@@ -72,4 +76,24 @@ module.exports = (async function (namespace = "sb", options = {}) {
 	}
 
 	console.groupEnd();
-});
+})
+
+/**
+ * @typedef {Object} GlobalSupiCoreNamespace
+ * @property {SupiCoreDate} Date
+ * @property {SupiCoreError} Error
+ * @property {SupiCorePromise} Promise
+ * @property {SupiCoreURLParams} URLParams
+ *
+ * @property {SupiCoreAwayFromKeyboard} AwayFromKeyboard
+ * @property {SupiCoreBanphrase} Banphrase
+ * @property {SupiCoreChannel} Channel
+ * @property {SupiCoreChatModule} ChatModule
+ * @property {SupiCoreCommand} Command
+ * @property {SupiCoreConfig} Config
+ * @property {SupiCoreFilter} Filter
+ * @property {SupiCoreGot} Got
+ * @property {SupiCorePlatform} Platform
+ * @property {SupiCoreReminder} Reminder
+ * @property {SupiCoreUser} User
+ */

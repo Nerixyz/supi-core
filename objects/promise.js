@@ -1,3 +1,7 @@
+/**
+ * Custom extension of native `Promise` that allows resolution/rejection from outside of the Promise's scope.
+ * @name SupiCorePromise
+ */
 module.exports = class Promise extends global.Promise {
 	#resolve = null;
 	#reject = null;

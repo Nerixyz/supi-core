@@ -1,7 +1,6 @@
 /**
  * Class to handle URL params, basically an extension of Map.
- * @memberof sb
- * @namespace URLParams
+ * @name SupiCoreURLParams
  */
 module.exports = class URLParams {
 	#char = "+";

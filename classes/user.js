@@ -1,8 +1,8 @@
 /**
  * Represents a chat user.
- * Since there can be hundreds of thousands of users loaded, a class is used to simplify the prototype, and potentially save some memory and/or processing power with V8.
- * @memberof sb
- * @type User
+ * Since there can be hundreds of thousands of users loaded, a class is used to simplify the prototype,
+ * and potentially save some memory and/or processing power with V8.
+ * @name SupiCoreUser
  */
 module.exports = class User extends require("./template.js") {
     static mapCacheExpiration = 300_000;
@@ -13,7 +13,6 @@ module.exports = class User extends require("./template.js") {
     static data = new Map();
     static bots = new Map();
 
-    /** @alias {User} */
     constructor (data) {
         super();
 
@@ -44,7 +43,7 @@ module.exports = class User extends require("./template.js") {
 
         /**
          * Date of first sighting.
-         * @type {sb.Date}
+         * @type {SupiCoreDate}
          */
         this.Started_Using = (data.Started_Using instanceof sb.Date)
             ? data.Started_Using
@@ -159,10 +158,10 @@ module.exports = class User extends require("./template.js") {
     /**
      * Searches for a user, based on their ID, or Name.
      * Returns immediately if identifier is already a User.
-     * @param {User|number|string} identifier
+     * @param {SupiCoreUser|number|string} identifier
      * @param {boolean} strict If false and searching for user via string, and it is not found, creates a new User.
      * @param {Object} [options]
-     * @returns {User|void}
+     * @returns {SupiCoreUser|null}
      * @throws {sb.Error} If the type of identifier is unrecognized
      */
     static async get (identifier, strict = true, options = {}) {
@@ -255,8 +254,8 @@ module.exports = class User extends require("./template.js") {
      * Fetches a batch of users together.
      * Takes existing records from cache, the rest is pulled from dataase.
      * Does not support creating new records like `get()` does.
-     * @param {Array<User|string|number>} identifiers
-     * @returns {Promise<User[]>}
+     * @param {Array<SupiCoreUser|string|number>} identifiers
+     * @returns {Promise<SupiCoreUser[]>}
      */
     static async getMultiple (identifiers) {
         const result = [];
@@ -328,7 +327,7 @@ module.exports = class User extends require("./template.js") {
      * No other types of ID are supported.
      * @param {string} property
      * @param {number} identifier
-     * @returns {User|void}
+     * @returns {SupiCoreUser|void}
      */
     static getByProperty (property, identifier) {
         const iterator = User.data.values();
@@ -345,6 +344,12 @@ module.exports = class User extends require("./template.js") {
         return user;
     }
 
+    /**
+     * Normalizes a username to be saved in a standard format.
+     * Removes prefixing `@` symbol and replaces consecutive whitespace with a single `_` character
+     * @param {string} username
+     * @returns {string}
+     */
     static normalizeUsername (username) {
         return username
             .toLowerCase()
@@ -355,7 +360,7 @@ module.exports = class User extends require("./template.js") {
     /**
      * Adds a new user to the database.
      * @param {string} name
-     * @returns {Promise<User>}
+     * @returns {Promise<SupiCoreUser>}
      */
     static async add (name) {
         const preparedName = User.normalizeUsername(name);
@@ -381,6 +386,11 @@ module.exports = class User extends require("./template.js") {
         return user;
     }
 
+    /**
+     * Iterates through all cache levels, and populates them with the provided User.
+     * @param {SupiCoreUser} user
+     * @returns {Promise<void>}
+     */
     static async populateCaches (user) {
         if (!User.data.has(user.Name)) {
             User.data.set(user.Name, user);
@@ -393,6 +403,11 @@ module.exports = class User extends require("./template.js") {
         }
     }
 
+    /**
+     * Recreates a User object from cache. If it isn't found, `null` is returned.
+     * @param {Object} options
+     * @returns {Promise<SupiCoreUser|null>}
+     */
     static async createFromCache (options) {
         if (!sb.Cache) {
             throw new sb.Error({
@@ -409,6 +424,12 @@ module.exports = class User extends require("./template.js") {
         return new User(cacheData);
     }
 
+    /**
+     * Removes all data related to the provided User from all caches.
+     * Used to force a refresh if the User was changed in the database.
+     * @param {SupiCoreUser|string|number} identifier
+     * @returns {Promise<void>}
+     */
     static async invalidateUserCache (identifier) {
         if (identifier instanceof User) {
             User.data.delete(identifier.Name);

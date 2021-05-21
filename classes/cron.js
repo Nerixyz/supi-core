@@ -15,7 +15,7 @@ module.exports = class Cron extends require("./template.js") {
 
 	/**
 	 * Unique cron name
-	 * @type {sb.Date}
+	 * @type {SupiCoreDate}
 	 */
 	Name;
 

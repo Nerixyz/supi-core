@@ -1,7 +1,6 @@
 /**
- * Represents a user's AFK status
- * @memberof sb
- * @type Platform
+ * Represents a chat platform - usually consisting of one or many channels
+ * @name SupiCorePlatform
  */
 module.exports = class Platform extends require("./template.js") {
 	/**
@@ -9,21 +8,19 @@ module.exports = class Platform extends require("./template.js") {
 	 * @type {Controller}
 	 */
 	#controller = null;
+
+	/** @type {Map<SupiCoreChannel, Map<SupiCoreUser, SupiCorePromise>>} */
 	#userMessagePromises = new Map();
 
 	/**
 	 * @param {Object} data
-	 * @param {number} data.User_Alias
-	 * @param {sb.Date} data.Started
-	 * @param {string} data.Text
-	 * @param {boolean} data.Silent
 	 */
 	constructor (data) {
 		super();
 		
 		/**
 		 * Unique numeric platform identifier.
-		 * @type {User.ID}
+		 * @type {number}
 		 */
 		this.ID = data.ID;
 
@@ -121,8 +118,8 @@ module.exports = class Platform extends require("./template.js") {
 
 	/**
 	 * Determines if a user is an "owner" of a given channel in the platform.
-	 * @param {Channel} channelData
-	 * @param {User} userData
+	 * @param {SupiCoreChannel} channelData
+	 * @param {SupiCoreUser} userData
 	 * @returns {null|boolean}
 	 */
 	isUserChannelOwner (channelData, userData) {
@@ -135,8 +132,8 @@ module.exports = class Platform extends require("./template.js") {
 
 	/**
 	 * Sends a message into a given channel.
-	 * @param message
-	 * @param channel
+	 * @param {string} message
+	 * @param {SupiCoreChannel} channel
 	 * @returns {Promise<void>}
 	 */
 	send (message, channel) {
@@ -146,8 +143,8 @@ module.exports = class Platform extends require("./template.js") {
 	/**
 	 * Sends a private message to a given user.
 	 * @param {string} message
-	 * @param {string} user
-	 * @param {Channel} [channelData]
+	 * @param {SupiCoreUser} user
+	 * @param {SupiCoreChannel} [channelData]
 	 * @returns {Promise<void>}
 	 */
 	pm (message, user, channelData) {
@@ -158,6 +155,13 @@ module.exports = class Platform extends require("./template.js") {
 		this.#controller = null;
 	}
 
+	/**
+	 *
+	 * @param {SupiCoreChannel} channelData
+	 * @param {SupiCoreUser} userData
+	 * @param options
+	 * @returns {SupiCorePromise<*>}
+	 */
 	waitForUserMessage (channelData, userData, options = {}) {
 		const delay = options.timeout ?? 10_000;
 		const promise = new sb.Promise();
@@ -218,10 +222,21 @@ module.exports = class Platform extends require("./template.js") {
 		return data;
 	}
 
+	/**
+	 * @param {SupiCoreChannel} channelData
+	 * @returns {Array}
+	 */
 	async fetchChannelEmotes (channelData) {
 		return await this.controller.fetchChannelEmotes(channelData);
 	}
 
+	/**
+	 * @param {SupiCoreChannel} channelData
+	 * @param {string[]} emotes
+	 * @param {string} fallbackEmote
+	 * @param {Object} options = {}
+	 * @returns {Array}
+	 */
 	async getBestAvailableEmote (channelData, emotes, fallbackEmote, options = {}) {
 		if (channelData) {
 			return channelData.getBestAvailableEmote(emotes, fallbackEmote, options);
@@ -240,6 +255,12 @@ module.exports = class Platform extends require("./template.js") {
 		return fallbackEmote;
 	}
 
+	/**
+	 * @param {string} message
+	 * @param {SupiCoreChannel|string|number} channel
+	 * @param {Object} options = {}
+	 * @returns {Promise<*>}
+	 */
 	async prepareMessage (message, channel, options = {}) {
 		return await this.controller.prepareMessage(message, channel, {
 			...options,

@@ -17,25 +17,25 @@ module.exports = class Filter extends require("./template.js") {
 
 		/**
 		 * Unique numeric user identifier
-		 * @type {User.ID|null}
+		 * @type {number|null}
 		 */
 		this.User_Alias = data.User_Alias;
 
 		/**
 		 * Unique numeric channel identifier
-		 * @type {Channel.ID|null}
+		 * @type {number|null}
 		 */
 		this.Channel = data.Channel;
 
 		/**
 		 * Unique numeric command identifier
-		 * @type {Command.ID|null}
+		 * @type {number|null}
 		 */
 		this.Command = data.Command;
 
 		/**
 		 * Unique numeric platform identifier
-		 * @type {Platform.ID|null}
+		 * @type {number|null}
 		 */
 		this.Platform = data.Platform;
 
@@ -180,7 +180,7 @@ module.exports = class Filter extends require("./template.js") {
 
 		/**
 		 * If the filter is a block, this is the user who is being blocked from targetting someone with a command.
-		 * @type {User.ID|null}
+		 * @type {number|null}
 		 */
 		this.Blocked_User = data.Blocked_User;
 
@@ -192,7 +192,7 @@ module.exports = class Filter extends require("./template.js") {
 
 		/**
 		 * Unique numeric user identifier of the person who created the filter.
-		 * @type {User.ID|null}
+		 * @type {number|null}
 		 */
 		this.Issued_By = data.Issued_By;
 	}

@@ -1,4 +1,13 @@
 /* global sb */
+
+/**
+ * Supi-core extension of native `Error` with added arguments
+ * @name SupiCoreError
+ * @property {Object} errors further derived error objects
+ * @property {APIError} errors.APIError
+ * @property {GenericRequestError} errors.GenericRequestError
+ * @property {NotImplementedError} errors.NotImplementedError
+ */
 module.exports = class Error extends global.Error {
 	/**
 	 * Custom error object - has arguments provided

@@ -1,13 +1,9 @@
 /**
  * Represents a chat channel.
- * @memberof sb
- * @type Channel
  */
-const Template = require("./template.js");
-module.exports = class Channel extends Template {
+class SupiCoreChannel extends require("./template.js") {
     static redisPrefix = "sb-channel";
 
-    /** @alias {Channel} */
     constructor (data) {
         super();
 
@@ -25,7 +21,7 @@ module.exports = class Channel extends Template {
 
         /**
          * Platform name. Must be unique when combined with {@link Channel.Name}.
-         * @type {Platform}
+         * @type {SupiCorePlatform}
          */
         this.Platform = sb.Platform.get(data.Platform);
 
@@ -100,7 +96,7 @@ module.exports = class Channel extends Template {
         /**
          * If not null, every message sent to this channel will also be mirrored to the channel with this ID.
          * Only 1-to-1 or one-way mirroring is supported.
-         * @type {Channel.ID|null}
+         * @type {number|null}
          */
         this.Mirror = data.Mirror;
 
@@ -223,7 +219,7 @@ module.exports = class Channel extends Template {
 
     /**
      * Determines if a user is the owner of the channel the instances represents.
-     * @param {User} userData
+     * @param {SupiCoreUser} userData
      * @returns {Promise<null|boolean>}
      */
     isUserChannelOwner (userData) {
@@ -232,7 +228,7 @@ module.exports = class Channel extends Template {
 
     /**
      * Checks if a provided user is an ambassador of the channel instance
-     * @param {User} userData
+     * @param {SupiCoreUser} userData
      * @returns {boolean}
      */
     isUserAmbassador (userData) {
@@ -287,7 +283,7 @@ module.exports = class Channel extends Template {
     /**
      * Mirrors the message to the given mirror channel, if this instance has been configured to do so.
      * @param {string} message
-     * @param {User} userData
+     * @param {SupiCoreUser} userData
      * @param {boolean} commandUsed = false
      * @returns {Promise<void>}
      */
@@ -374,6 +370,7 @@ module.exports = class Channel extends Template {
         this.sessionData = null;
     }
 
+    /** @static */
     static async loadData () {
         /** @type Channel[] */
         const data = await sb.Query.getRecordset(rs => rs
@@ -405,9 +402,9 @@ module.exports = class Channel extends Template {
 
     /**
      * Returns a Channel object, based on the identifier provided, and a optional platform parameter
-     * @param {Channel|number|string} identifier
-     * @param {Platform|number|string} [platform]
-     * @returns {Channel|null}
+     * @param {SupiCoreChannel|number|string} identifier
+     * @param {SupiCorePlatform|number|string} [platform]
+     * @returns {SupiCoreChannel|null}
      * @throws {sb.Error} If identifier type is not recognized
      */
     static get (identifier, platform) {
@@ -445,7 +442,7 @@ module.exports = class Channel extends Template {
     /**
      * Fetches a list of joinable channels for a given platform.
      * @param {PlatformIdentifier} platform
-     * @returns {Channel[]}
+     * @returns {SupiCoreChannel[]}
      */
     static getJoinableForPlatform (platform) {
         const platformData = sb.Platform.get(platform);
@@ -457,7 +454,7 @@ module.exports = class Channel extends Template {
     /**
      * Creates a new channel and pushes its definition to the database
      * @param {string} name
-     * @param {Platform} platformData
+     * @param {SupiCorePlatform} platformData
      * @param {string} mode
      * @param {string} [specificID]
      * @returns {Promise<Channel>}
@@ -521,7 +518,9 @@ module.exports = class Channel extends Template {
 
         return true;
     }
-};
+}
+
+module.exports = SupiCoreChannel;
 
 /**
  * @typedef {'Twitch'|'Cytube'|'Discord'|'Minecraft'} PlatformIdentifier

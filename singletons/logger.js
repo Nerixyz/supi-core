@@ -257,8 +257,8 @@ module.exports = (function () {
 		 * Pushes a message to a specified channel's queue.
 		 * Queues are emptied accordingly to cronjobs prepared in {@link Logger.constructor}
 		 * @param {string} message
-		 * @param {User} userData
-		 * @param {Channel} channelData
+		 * @param {SupiCoreUser} userData
+		 * @param {SupiCoreChannel} channelData
 		 * @returns {Promise<void>}
 		 */
 		async push (message, userData, channelData) {
@@ -296,8 +296,8 @@ module.exports = (function () {
 		 * @param {string} link
 		 * @param {string} typeIdentifier
 		 * @param {number} length
-		 * @param {User} userData
-		 * @param {Channel} channelData
+		 * @param {SupiCoreUser} userData
+		 * @param {SupiCoreChannel} channelData
 		 * @returns {Promise<void>}
 		 */
 		async logVideoRequest (link, typeIdentifier, length, userData, channelData) {
@@ -338,9 +338,9 @@ module.exports = (function () {
 		/**
 		 * Inserts a Twitch-specific ban data to the database.
 		 * @param {string|number} identifier
-		 * @param {Channel} channelData
+		 * @param {SupiCoreChannel} channelData
 		 * @param {number} length
-		 * @param {sb.Date} date
+		 * @param {SupiCoreDate} date
 		 * @param {string|null} notes
 		 */
 		logBan (identifier, channelData, length, date, notes) {

@@ -1,3 +1,7 @@
+/**
+ * Represents a single banphrase module that will modify an output according to a combination of global/platform/channel.
+ * @name SupiCoreBanphrase
+ */
 module.exports = (function () {
 	"use strict";
 
@@ -211,7 +215,7 @@ module.exports = (function () {
 		 * Checks all banphrases associated with given channel and platform. Global ones are checked as well.
 		 * If a channel is configured to use an external API, that is chcked too.
 		 * @param {string} message
-		 * @param {Channel|null} channelData
+		 * @param {SupiCoreChannel|null} channelData
 		 * @param {Object} options = {}
 		 * @returns {Promise<BanphraseCheckResult>}
 		 */

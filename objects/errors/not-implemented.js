@@ -1,3 +1,7 @@
+/**
+ * @deprecated
+ * @type {NotImplementedError}
+ */
 module.exports = class NotImplementedError extends sb.Error {
 	constructor (object) {
 		super({

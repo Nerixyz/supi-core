@@ -1,7 +1,6 @@
 /**
  * Represents a user's AFK status
- * @memberof sb
- * @type AwayFromKeyboard
+ * @name SupiCoreAwayFromKeyboard
  */
 module.exports = class AwayFromKeyboard extends require("./template.js") {
 	constructor (data) {
@@ -15,13 +14,13 @@ module.exports = class AwayFromKeyboard extends require("./template.js") {
 
 		/**
 		 * Unique numeric user identifier
-		 * @type {User.ID}
+		 * @type {number}
 		 */
 		this.User_Alias = data.User_Alias;
 
 		/**
 		 * The timestamp of AFK status setup
-		 * @type {sb.Date}
+		 * @type {SupiCoreDate}
 		 */
 		this.Started = data.Started;
 
@@ -92,8 +91,8 @@ module.exports = class AwayFromKeyboard extends require("./template.js") {
 	 * Checks if an user is AFK.
 	 * If they are, returns their AFK data and unsets the AFK status.
 	 * If the status is set as not silent, also emits an event to Master to send a message
-	 * @param {User} userData
-	 * @param {Channel} channelData
+	 * @param {SupiCoreUser} userData
+	 * @param {SupiCoreChannel} channelData
 	 * @returns {Promise<void>}
 	 */
 	static async checkActive (userData, channelData) {
@@ -141,7 +140,7 @@ module.exports = class AwayFromKeyboard extends require("./template.js") {
 
 	/**
 	 * Sets a user's AFK status.
-	 * @param {User} userData
+	 * @param {SupiCoreUser} userData
 	 * @param {string} text
 	 * @param {string} status
 	 * @param {boolean} [silent] If true, user coming back will not be broadcast.

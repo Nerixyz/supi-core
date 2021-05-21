@@ -1,8 +1,7 @@
 /**
  * Represents a pending reminder from (usually) one user to another.
  * An active reminder will be printed into the chat once the target user is spotted.
- * @memberof sb
- * @type Reminder
+ * @name SupiCoreReminder
  */
 module.exports = class Reminder extends require("./template.js") {
     static LongTimeout = require("long-timeout");
@@ -53,14 +52,14 @@ module.exports = class Reminder extends require("./template.js") {
 
         /**
          * Date of creation.
-         * @type {sb.Date}
+         * @type {SupiCoreDate}
          */
         this.Created = data.Created;
 
         /**
          * Schedule date of reminder, if it's timed.
          * If null, reminder is tied to a user typing in chat.
-         * @type {sb.Date}
+         * @type {SupiCoreDate}
          */
         this.Schedule = data.Schedule;
 
@@ -89,7 +88,7 @@ module.exports = class Reminder extends require("./template.js") {
     /**
      * Sets up the timeout of a timed reminder.
      * The reminder will be broadcasted in the origin channel.
-     * @returns {Reminder}
+     * @returns {SupiCoreReminder}
      */
     activateTimeout () {
         if (!this.Schedule) {
@@ -102,8 +101,9 @@ module.exports = class Reminder extends require("./template.js") {
 
         /** @type {LongTimeout} */
         this.timeout = new Reminder.LongTimeout(async () => {
-            /** @type {Channel|null} */
+            /** @type {SupiCoreChannel|null} */
             const channelData = (this.Channel === null) ? null : sb.Channel.get(this.Channel);
+
             const fromUserData = await sb.User.get(this.User_From, true);
             const toUserData = await sb.User.get(this.User_To, true);
             let message = null;
@@ -166,7 +166,7 @@ module.exports = class Reminder extends require("./template.js") {
     /**
      * Deactivates a reminder. Also deactivates it in database if required.
      * @param {boolean} success If true, the reminder was completed, and can be removed in database.
-     * @returns {Reminder}
+     * @returns {SupiCoreReminder}
      */
     async deactivate (success) {
         this.Active = false;
@@ -331,8 +331,8 @@ module.exports = class Reminder extends require("./template.js") {
     }
 
     /**
-     * @param {User} targetUserData The user ID to check for
-     * @param {Channel} channelData The channel where the reminder was fired
+     * @param {SupiCoreUser} targetUserData The user ID to check for
+     * @param {SupiCoreChannel} channelData The channel where the reminder was fired
      */
     static async checkActive (targetUserData, channelData) {
         /** @typeof {Reminder[]} */
@@ -501,7 +501,7 @@ module.exports = class Reminder extends require("./template.js") {
      * Used mostly in commands to set up reminders.
      * @param {number} userFrom
      * @param {number} userTo
-     * @param {sb.Date} [schedule]
+     * @param {SupiCoreDate} [schedule]
      * @return {ReminderCreationResult}
      */
     static async checkLimits (userFrom, userTo, schedule) {

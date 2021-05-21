@@ -18,8 +18,8 @@ module.exports = class SystemLogger extends require("./template.js") {
 	 * Inserts a system log to the database.
 	 * @param {CompoundSystemLogTag} tag
 	 * @param {string} [description] = null
-	 * @param {Channel} [channel] = null
-	 * @param {User} [user] = null
+	 * @param {SupiCoreChannel} [channel] = null
+	 * @param {SupiCoreUser} [user] = null
 	 * @returns {Promise<void>}
 	 */
 	async send (tag, description = null, channel = null, user = null) {

@@ -39,9 +39,9 @@ class Context {
 	 * `all` returns true if all are set, and `array` returns the boolean array as is
 	 * @param {UserPermissionLevel[]} levels The permission levels to check
 	 * @param {Object} options
-	 * @param {User} [options.user]
-	 * @param {Channel} [options.channel]
-	 * @param {Platform} [options.platform]
+	 * @param {SupiCoreUser} [options.user]
+	 * @param {SupiCoreChannel} [options.channel]
+	 * @param {SupiCorePlatform} [options.platform]
 	 * @returns {Promise<boolean[]|boolean>}
 	 */
 	async getUserPermissions (type, levels, options = {}) {
@@ -78,8 +78,8 @@ class Context {
 	 * @param {string[]} emotes
 	 * @param {string} fallback
 	 * @param {Object} options
-	 * @param {Channel} [options.channel]
-	 * @param {Platform} [options.platform]
+	 * @param {SupiCoreChannel} [options.channel]
+	 * @param {SupiCorePlatform} [options.platform]
 	 * @param {boolean} [options.returnEmoteObject]
 	 * @param {Function} [options.filter]
 	 * @returns {Promise<string>}
@@ -492,8 +492,8 @@ class Command extends require("./template.js") {
 	 * Checks if a command exists, and executes it if needed.
 	 * @param {Command|string} identifier
 	 * @param {string[]} argumentArray
-	 * @param {Channel|null} channelData
-	 * @param {User} userData
+	 * @param {SupiCoreChannel|null} channelData
+	 * @param {SupiCoreUser} userData
 	 * @param {Object} options = {} any extra options that will be passed to the command as extra.append
 	 * @param {boolean} [options.skipMention] If true, no mention will be added to the command string, regardless of other options.
 	 * @returns {CommandResult}
@@ -923,8 +923,8 @@ class Command extends require("./template.js") {
 
 	/**
 	 * Handles the setting (or skipping) cooldowns for given combination of data.
-	 * @param {Channel} channelData
-	 * @param {User} userData
+	 * @param {SupiCoreChannel} channelData
+	 * @param {SupiCoreUser} userData
 	 * @param {Command} commandData
 	 * @param {Object} cooldownData
 	 */
@@ -1221,8 +1221,8 @@ module.exports = Command;
 /**
  * @typedef {Object} CommandContext
  * @property {string} invocation Exact command name used for invocation - name or alias
- * @property {User} user Data about the user who invoked the command
- * @property {Channel} channel Data about the channel where the command was invoked
+ * @property {SupiCoreUser} user Data about the user who invoked the command
+ * @property {SupiCoreChannel} channel Data about the channel where the command was invoked
  * @property {Command} command Data about the command being invoked
  * @property {Object} append = {} other platform-specific options
  * @property {?} [transaction] For rollbackable commands, a transaction is set up and later committed/rollbacked.

@@ -157,11 +157,11 @@ module.exports = (function () {
 
 		/**
 		 * Returns a formatted string, specifying an amount of time delta from current date to provided date.
-		 * @param {sb.Date|Date|number} target
+		 * @param {SupiCoreDate|Date|number} target
 		 * @param {boolean} [skipAffixes] if true, the affixes "in X hours" or "X hours ago" will be omitted
 		 * @param {boolean} [respectLeapYears] If true, shows a time difference spanning a whole year as `1y` regardless
 		 * of the actual length of the year. If disabled, a year is always counted to be 365 * 24 hours. Defaults to false
-		 * @param {sb.Date} [deltaTo] If set, calculate time delta between target and deltaTo. If undefined, calculate
+		 * @param {SupiCoreDate} [deltaTo] If set, calculate time delta between target and deltaTo. If undefined, calculate
 		 * delta between target and the current time.
 		 * @returns {string}
 		 */

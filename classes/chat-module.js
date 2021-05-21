@@ -1,8 +1,7 @@
 /**
  * Represents a custom hook-like function that gets invoked every time a specified event
  * is emitted in a given channel.
- * @memberof sb
- * @type {ChatModule}
+ * @name SupiCoreChatModule
  */
 module.exports = class ChatModule extends require("./template.js") {
 	//<editor-fold defaultstate="collapsed" desc="=== INSTANCE PROPERTIES ===">
@@ -104,8 +103,8 @@ module.exports = class ChatModule extends require("./template.js") {
 	 * Detaches the module instance from all channels determined by options.
 	 * @param {Object} options
 	 * @param {boolean} [options.remove] If true, the module reference will be removed instead of deactivated.
-	 * @param {Platform} [options.platform] Specified attachment platform
-	 * @param {Channel|Channel[]} [options.channel] Specified attachment channels	 * 
+	 * @param {SupiCorePlatform} [options.platform] Specified attachment platform
+	 * @param {SupiCoreChannel|Channel[]} [options.channel] Specified attachment channels	 * 
 	 */
 	detach (options) {
 		for (const event of this.Events) {
